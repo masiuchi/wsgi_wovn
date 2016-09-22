@@ -7,6 +7,6 @@ before_script:
   - pip install coveralls flake8 hacking
 script:
   - coverage run --source=wsgi_wovn setup.py test
-  - make flake
+  - make flake8
 after_success:
   - coveralls
