@@ -2,7 +2,9 @@ import re
 
 from wsgi_wovn.lang import Lang
 
+
 class Headers:
+
     def __init__(self, environ, settings):
         self.__environ = environ
         self.__settings = settings
@@ -14,21 +16,24 @@ class Headers:
                 self.__environ['REQUEST_URI'] = '/'
             else:
                 self.__environ['REQUEST_URI'] = ''
-            self.__environ['REQUEST_URI'] += self.__environ.get('PATH_INFO') or ''
+            self.__environ[
+                'REQUEST_URI'] += self.__environ.get('PATH_INFO') or ''
             if len(self.__environ.get('QUERY_STRING') or '') > 0:
-                self.__environ['REQUEST_URI'] += '?' + self.__environ['QUERY_STRING']
+                self.__environ['REQUEST_URI'] += '?' + \
+                    self.__environ['QUERY_STRING']
 
         if re.search(r'://', self.__environ['REQUEST_URI']):
             self.__environ['REQUEST_URI'] \
-                    = re.sub('^.*://[^/]+', '', self.__environ['REQUEST_URI'])
+                = re.sub('^.*://[^/]+', '', self.__environ['REQUEST_URI'])
         self.unmasked_pathname = self.__environ['REQUEST_URI'].split('?')[0]
-        if not (re.search(r'/$', self.unmasked_pathname) \
+        if not (re.search(r'/$', self.unmasked_pathname)
                 or re.search(r'/[^/.]+\.[^/.]+$', self.unmasked_pathname)):
             self.unmasked_pathname += '/'
         self.unmasked_url = '%s://%s%s' \
-                % (self.protocol, self.unmasked_host, self.unmasked_pathname)
+            % (self.protocol, self.unmasked_host, self.unmasked_pathname)
         if settings['url_pattern'] == 'subdomain':
-            self.host = self.remove_lang(self.__environ['HTTP_HOST'], self.lang_code())
+            self.host = self.remove_lang(
+                self.__environ['HTTP_HOST'], self.lang_code())
         else:
             self.host = self.__environ.get('HTTP_HOST')
         request_uri = self.__environ['REQUEST_URI'].split('?')
@@ -56,7 +61,8 @@ class Headers:
             self.__query = ''
         self.__query = self.remove_lang(self.__query, self.lang_code())
         self.pathname = re.sub(r'/+$', '', self.pathname)
-        self.redis_url = (self.host or '') + (self.pathname or '') + (self.__query or '')
+        self.redis_url = (self.host or '') + \
+            (self.pathname or '') + (self.__query or '')
 
     def lang_code(self):
         if self.path_lang() and len(self.path_lang()) > 0:
@@ -68,7 +74,7 @@ class Headers:
         if not hasattr(self, '__path_lang'):
             pattern = re.compile(self.__settings.get('url_pattern_reg'))
             url = (self.__environ.get('SERVER_NAME') or '') \
-                    + (self.__environ.get('REQUEST_URI') or '')
+                + (self.__environ.get('REQUEST_URI') or '')
             match = pattern.search(url)
             if match and match.group('lang') and Lang.get_lang(match.group('lang')):
                 self.__path_lang = Lang.get_code(match.group('lang'))
@@ -79,7 +85,8 @@ class Headers:
     def browser_lang(self):
         if not self.__browser_lang:
             cookie = self.__environ['HTTP_COOKIE'] or ''
-            match = re.search('wovn_selected_lang\s*=\s*(?P<lang>[^;\s]+)', cookie)
+            match = re.search(
+                'wovn_selected_lang\s*=\s*(?P<lang>[^;\s]+)', cookie)
             if match and match.group('lang') and Lang.get_lang(match.group('lang')):
                 self.__browser_lang = match.group('lang')
             else:
@@ -123,30 +130,34 @@ class Headers:
         if self.__settings['url_pattern'] == 'query':
             if 'REQUEST_URI' in self.__environ:
                 self.__environ['REQUEST_URI'] \
-                        = self.remove_lang(self.__environ['REQUEST_URI'])
+                    = self.remove_lang(self.__environ['REQUEST_URI'])
             if 'QUERY_STRING' in self.__environ:
                 self.__environ['QUERY_STRING'] \
-                        = self.remove_lang(self.__environ['QUERY_STRING'])
+                    = self.remove_lang(self.__environ['QUERY_STRING'])
             if 'ORIGINAL_FULLPATH' in self.__environ:
                 self.__environ['ORIGINAL_FULLPATH'] \
-                        = self.remove_lang(self.__environ['ORIGINAL_FULLPATH'])
+                    = self.remove_lang(self.__environ['ORIGINAL_FULLPATH'])
 
         elif self.__settings['url_pattern'] == 'subdomain':
-            self.__environ['HTTP_HOST'] = self.remove_lang(self.__environ['HTTP_HOST'])
-            self.__environ['SERVER_NAME'] = self.removelang(self.__environ['SERVER_NAME'])
+            self.__environ['HTTP_HOST'] = self.remove_lang(
+                self.__environ['HTTP_HOST'])
+            self.__environ['SERVER_NAME'] = self.removelang(
+                self.__environ['SERVER_NAME'])
             if 'HTTP_REFERER' in self.__environ:
                 self.__environ['HTTP_REFERER'] \
-                        = self.remove_lang(self.__environ['HTTP_REFERER'])
+                    = self.remove_lang(self.__environ['HTTP_REFERER'])
 
         else:
-            self.__environ['REQUEST_URI'] = self.remove_lang(self.__environ['REQUEST_URI'])
+            self.__environ['REQUEST_URI'] = self.remove_lang(
+                self.__environ['REQUEST_URI'])
             if 'REQUEST_PATH' in self.__environ:
                 self.__environ['REQUEST_PATH'] \
-                        = self.remove_lang(self.__environ['REQUEST_PATH'])
-            self.__environ['PATH_INFO'] = self.remove_lang(self.__environ['PATH_INFO'])
+                    = self.remove_lang(self.__environ['REQUEST_PATH'])
+            self.__environ['PATH_INFO'] = self.remove_lang(
+                self.__environ['PATH_INFO'])
             if 'ORIGINAL_FULLPATH' in self.__environ:
                 self.__environ['ORIGINAL_FULLPATH'] \
-                        = self.remove_lang(self.__environ['ORIGINAL_FULLPATH'])
+                    = self.remove_lang(self.__environ['ORIGINAL_FULLPATH'])
 
         return self.__environ
 
@@ -185,15 +196,15 @@ class Headers:
                 new_location += 'wovn=' + self.lang_code()
 
             elif self.__settings['url_pattern'] == 'subdomain':
-                new_location = re.sub( \
-                        r'//([^.]+)', r'//%s.\1' % self.lang_code(), h[1]
-                        )
+                new_location = re.sub(
+                    r'//([^.]+)', r'//%s.\1' % self.lang_code(), h[1]
+                )
 
             else:
-                new_location = re.sub( \
-                        r'(//[^/]+)', r'\1/' + self.lang_code(), h[1]
-                        )
-            
+                new_location = re.sub(
+                    r'(//[^/]+)', r'\1/' + self.lang_code(), h[1]
+                )
+
             new_headers.append((h[0], new_location))
 
         return new_headers

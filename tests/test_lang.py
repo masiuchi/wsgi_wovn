@@ -2,6 +2,7 @@ import unittest
 
 from wsgi_wovn import Lang
 
+
 class TestLang(unittest.TestCase):
 
     def test_langs_exist(self):

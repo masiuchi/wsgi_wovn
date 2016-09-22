@@ -38,9 +38,9 @@ class Lang:
 
         for k, v in cls.LANG.items():
             if lang_name.lower() == v['name'].lower() \
-                or lang_name.lower() == v['en'].lower() \
-                or lang_name.lower() == v['code'].lower():
-                    return v['code']
+                    or lang_name.lower() == v['en'].lower() \
+                    or lang_name.lower() == v['code'].lower():
+                return v['code']
 
         return None
 

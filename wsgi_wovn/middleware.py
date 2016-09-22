@@ -9,8 +9,10 @@ from wsgi_wovn.lang import Lang
 from wsgi_wovn.store import Store
 import wsgi_wovn.version
 
+
 class Middleware(object):
-    def __init__(self, application,opts={}):
+
+    def __init__(self, application, opts={}):
         self.application = application
         self.__store = Store()
         self.__store.settings(opts)
@@ -23,21 +25,23 @@ class Middleware(object):
         h = Headers(environ, self.__store.settings())
         if self.__store.settings().get('test_mode') \
                 and self.__store.settings().get('test_url') != h.url:
-                    return self.application(environ, start_response)
+            return self.application(environ, start_response)
 
         if h.path_lang() == self.__store.settings().get('default_lang'):
-            redirect_headers = h.redirect(self.__store.settings().get('default_lang'))
+            redirect_headers = h.redirect(
+                self.__store.settings().get('default_lang'))
             start_response('307 Temporary Redirect', redirect_headers)
             return ''
 
         l = h.lang_code()
 
         res_status_headers = []
+
         def local_start(stat_str, head=[]):
             res_status_headers.append({
                 'status': stat_str,
                 'headers': head
-                })
+            })
 
         res = self.application(h.request_out(), local_start)
 
@@ -52,12 +56,13 @@ class Middleware(object):
         if self.__is_html(res_headers) and not re.match(r'1|302', res_status):
             values = self.__store.get_values(h.redis_url)
             url = {
-                    'protocol': h.protocol,
-                    'host': h.host,
-                    'pathname': h.pathname
-                    }
+                'protocol': h.protocol,
+                'host': h.host,
+                'pathname': h.pathname
+            }
             res = self.switch_lang(res, values, url, l, h)
-            res_headers = self.__set_content_length_to_headers(res, res_headers)
+            res_headers = self.__set_content_length_to_headers(
+                res, res_headers)
 
         res_headers = h.out(res_headers)
         start_response(res_status, res_headers)
@@ -108,7 +113,8 @@ class Middleware(object):
                         p = re.compile(l, re.IGNORECASE)
                         new_href = p.sub(l.lower(), href)
                     else:
-                        new_href = re.sub(r'(//)([^\.]*)', r'\1%s.\2' % l.lower(), href)
+                        new_href = re.sub(
+                            r'(//)([^\.]*)', r'\1%s.\2' % l.lower(), href)
 
                 elif pattern == 'query':
                     if re.search(r'\?', href):
@@ -117,7 +123,8 @@ class Middleware(object):
                         new_href = href + '&wovn=' + l
 
                 else:
-                    new_href = re.sub(r'([^\.]*\.[^/]*)(/|$)', r'\1/%s/' % l, href)
+                    new_href = re.sub(
+                        r'([^\.]*\.[^/]*)(/|$)', r'\1/%s/' % l, href)
 
         elif href:
             if pattern == 'subdomain':
@@ -127,7 +134,8 @@ class Middleware(object):
                     new_href = lang_url + '/' + re.sub(r'^\.\.\/', '', href)
 
                 elif re.match(r'\..*$', href):
-                    new_href = lang_url + current_dir + '/' + re.sub(r'^\./', '', href)
+                    new_href = lang_url + current_dir + \
+                        '/' + re.sub(r'^\./', '', href)
 
                 elif re.match(r'/.*$', href):
                     new_href = lang_url + href
@@ -177,6 +185,7 @@ class Middleware(object):
             if ignore_all or len(d.xpath('//html[@wovn-ignore]')) > 0:
                 ignore_all = True
                 html = lxml.html.tostring(d)
+
                 def repl(matchobj):
                     return b'href="%s"' % urllib.parse.unquote(matchobj.group(1))
                 html = re.sub(b'href="([^"]*)"', repl, html)
@@ -218,11 +227,12 @@ class Middleware(object):
                     node_text = t.text.strip()
                     if node_text in text_index and l in text_index[node_text] \
                             and len(text_index[node_text][l]) > 0:
-                                new_content = re.sub(
-                                        r'^(\s*)[\S\s]*(\s*)$',
-                                        '\1' + text_index[node_text][l][0]['data'] + '\2'
-                                        )
-                                t.text_content(new_content)
+                        new_content = re.sub(
+                            r'^(\s*)[\S\s]*(\s*)$',
+                            '\1' +
+                            text_index[node_text][l][0]['data'] + '\2'
+                        )
+                        t.text_content(new_content)
 
                 for m in d.xpath('//meta'):
                     if self.check_wovn_ignore(m):
@@ -231,16 +241,17 @@ class Middleware(object):
                     if not re.search(
                             r'^(description|title|og:title|og:description|twitter:title|twitter:description)$',
                             meta_data
-                            ):
+                    ):
                         continue
                     node_content = meta.get('content').strip()
                     if node_content in text_index and l in text_index[node_content] \
                             and len(text_index[node_content][l]) > 0:
-                                new_content = re.sub(
-                                        r'^(\s*)[\S\s]*(\s*)$',
-                                        '\1' + text_index_[node_content][l][0]['data'] + '\2'
-                                        )
-                                m.set('content', new_content)
+                        new_content = re.sub(
+                            r'^(\s*)[\S\s]*(\s*)$',
+                            '\1' +
+                            text_index_[node_content][l][0]['data'] + '\2'
+                        )
+                        m.set('content', new_content)
 
                 for i in d.xpath('//img'):
                     if self.check_wovn_ignore(i):
@@ -250,31 +261,34 @@ class Middleware(object):
                     if len(src) > 0:
                         if not re.search(r'://', src):
                             if re.match(r'/', src):
-                                src = url['protocol'] + '://' + url['host'] + src
+                                src = url['protocol'] + \
+                                    '://' + url['host'] + src
                             else:
-                                src = url['protocol'] + '://' + url['host'] + url['path'] + src
+                                src = url['protocol'] + '://' + \
+                                    url['host'] + url['path'] + src
 
                         if src in src_index and l in src_index[src] \
                                 and len(src_index[src][l]) > 0:
-                                    new_src = img_src_prefx + src_index[src][l][0]['data']
-                                    i.set('src', new_src)
+                            new_src = img_src_prefx + \
+                                src_index[src][l][0]['data']
+                            i.set('src', new_src)
 
                     if len(i.get('alt') or '') > 0:
                         alt = i.get('alt').strip()
                         if alt in text_index and l in text_index[alt] \
-                            and len(text_index[alt][l]) > 0:
-                                new_alt = re.sub(
-                                        r'^(\s*)[\S\s]*(\s*)$',
-                                        '\1' + text_index[alt][l][0]['data'] + '\2'
-                                        )
-                                i.set('alt', new_alt)
+                                and len(text_index[alt][l]) > 0:
+                            new_alt = re.sub(
+                                r'^(\s*)[\S\s]*(\s*)$',
+                                '\1' + text_index[alt][l][0]['data'] + '\2'
+                            )
+                            i.set('alt', new_alt)
 
             for s in d.xpath('//script'):
                 src = s.get('src')
                 if len(src) > 0 and re.search(
                         r'//j.(dev-)?wovn.io(:3000)?/',
                         src
-                        ):
+                ):
                     s.remove()
 
             head = d.xpath('//head')
@@ -289,13 +303,13 @@ class Middleware(object):
             insert_node.set('src', '//j.wovn.io/1')
             insert_node.set('async', '')
             data = {
-                    'key': self.__store.settings().get('user_token'),
-                    'backend': 'true',
-                    'currentLang': l,
-                    'defaultLang': self.__store.settings().get('default_lang'),
-                    'urlPattern': self.__store.settings().get('url_pattern'),
-                    'version': wsgi_wovn.version.VERSION
-                    }
+                'key': self.__store.settings().get('user_token'),
+                'backend': 'true',
+                'currentLang': l,
+                'defaultLang': self.__store.settings().get('default_lang'),
+                'urlPattern': self.__store.settings().get('url_pattern'),
+                'version': wsgi_wovn.version.VERSION
+            }
             data_array = []
             for key, value in data.items():
                 data_array.append(key + '=' + value)
@@ -313,9 +327,10 @@ class Middleware(object):
                 insert_node.set('hreflang', l)
                 insert_node.set('href', h.redirect_location(l))
                 parent_node.append(insert_node)
-            
+
             def repl(matchobj):
-                s = b'href="%s"' % urllib.parse.unquote(matchobj.group(1).decode('utf-8')).encode('utf-8')
+                s = b'href="%s"' % urllib.parse.unquote(
+                    matchobj.group(1).decode('utf-8')).encode('utf-8')
                 return s
             output = re.sub(b'href="([^"]*)"', repl, lxml.html.tostring(d))
             new_body.append(output)

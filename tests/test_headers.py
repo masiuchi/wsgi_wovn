@@ -5,9 +5,10 @@ from urllib.parse import urlparse
 from wsgi_wovn.headers import Headers
 from wsgi_wovn.lang import Lang
 
+
 class TestHeaders(unittest.TestCase):
     __chinese_languages = ('zh-CHS', 'zh-CHT')
-    
+
     def test_init(self):
         h = Headers(self.__get_env(), self.__get_settings())
         self.assertTrue(h)
@@ -16,73 +17,73 @@ class TestHeaders(unittest.TestCase):
 
     def __test_init(self, env, settings, expected):
         h = Headers(
-                self.__get_env(env),
-                self.__get_settings(settings)
-                )
+            self.__get_env(env),
+            self.__get_settings(settings)
+        )
         self.assertEqual(expected, h.url)
 
     def test_init_with_sample_url(self):
         self.__test_init(
-                dict(url='https://wovn.io'),
-                dict(),
-                'wovn.io/'
-                )
+            dict(url='https://wovn.io'),
+            dict(),
+            'wovn.io/'
+        )
 
     def test_init_with_query_language(self):
         self.__test_init(
-                dict(url='https://wovn.io/?wovn=en'),
-                dict(url_pattern='query'),
-                'wovn.io/?'
-                )
+            dict(url='https://wovn.io/?wovn=en'),
+            dict(url_pattern='query'),
+            'wovn.io/?'
+        )
 
     def test_init_with_query_language_without_slash(self):
         self.__test_init(
-                dict(url='https://wovn.io?wovn=en'),
-                dict(url_pattern='query'),
-                'wovn.io/?'
-                )
+            dict(url='https://wovn.io?wovn=en'),
+            dict(url_pattern='query'),
+            'wovn.io/?'
+        )
 
     def test_init_with_path_language(self):
         self.__test_init(
-                dict(url='https://wovn.io/en'),
-                dict(),
-                'wovn.io/'
-                )
+            dict(url='https://wovn.io/en'),
+            dict(),
+            'wovn.io/'
+        )
 
     def test_init_with_domain_language(self):
         self.__test_init(
-                dict(url='https://en.wovn.io/'),
-                dict(url_pattern='subdomain'),
-                'wovn.io/'
-                )
+            dict(url='https://en.wovn.io/'),
+            dict(url_pattern='subdomain'),
+            'wovn.io/'
+        )
 
     def test_init_with_path_language_with_query(self):
         self.__test_init(
-                dict(url='https://wovn.io/en/?wovn=zh-CHS'),
-                dict(),
-                'wovn.io/?wovn=zh-CHS'
-                )
+            dict(url='https://wovn.io/en/?wovn=zh-CHS'),
+            dict(),
+            'wovn.io/?wovn=zh-CHS'
+        )
 
     def test_init_with_domain_language_with_query(self):
         self.__test_init(
-                dict(url='https://en.wovn.io/?wovn=zh-CHS'),
-                dict(url_pattern='subdomain'),
-                'wovn.io/?wovn=zh-CHS'
-                )
+            dict(url='https://en.wovn.io/?wovn=zh-CHS'),
+            dict(url_pattern='subdomain'),
+            'wovn.io/?wovn=zh-CHS'
+        )
 
     def test_init_with_path_language_with_query_without_slash(self):
         self.__test_init(
-                dict(url='https://wovn.io/en?wovn=zh-CHS'),
-                dict(),
-                'wovn.io/?wovn=zh-CHS'
-                )
+            dict(url='https://wovn.io/en?wovn=zh-CHS'),
+            dict(),
+            'wovn.io/?wovn=zh-CHS'
+        )
 
     def test_init_with_domain_language_with_query_without_slash(self):
         self.__test_init(
-                dict(url='https://en.wovn.io?wovn=zh-CHS'),
-                dict(url_pattern='subdomain'),
-                'wovn.io/?wovn=zh-CHS'
-                )
+            dict(url='https://en.wovn.io?wovn=zh-CHS'),
+            dict(url_pattern='subdomain'),
+            'wovn.io/?wovn=zh-CHS'
+        )
 
     ###
 
@@ -90,12 +91,12 @@ class TestHeaders(unittest.TestCase):
         if len(url) == 0:
             url = 'https://%s.wovn.io'
         h = Headers(
-                self.__get_env({'url': url % subdomain}),
-                self.__get_settings({
-                    'url_pattern': 'subdomain',
-                    'url_pattern_reg': '^(?P<lang>[^.]+)\.'
-                    })
-                )
+            self.__get_env({'url': url % subdomain}),
+            self.__get_settings({
+                'url_pattern': 'subdomain',
+                'url_pattern_reg': '^(?P<lang>[^.]+)\.'
+            })
+        )
         self.assertEqual(path_lang, h.path_lang())
 
     def test_path_lang_subdomain_empty(self):
@@ -170,11 +171,13 @@ class TestHeaders(unittest.TestCase):
 
     def test_path_lang_subdomain_uppercase_with_slash_with_port(self):
         for key in Lang.LANG.keys():
-            self.__test_path_lang_subdomain_with_slash_with_port(key.upper(), key)
+            self.__test_path_lang_subdomain_with_slash_with_port(
+                key.upper(), key)
 
     def test_path_lang_subdomain_lowercase_with_slash_with_port(self):
         for key in self.__chinese_languages:
-            self.__test_path_lang_subdomain_with_slash_with_port(key.lower(), key)
+            self.__test_path_lang_subdomain_with_slash_with_port(
+                key.lower(), key)
 
     ###
 
@@ -212,11 +215,13 @@ class TestHeaders(unittest.TestCase):
 
     def test_path_lang_subdomain_uppercase_with_slash_unsecure(self):
         for key in Lang.LANG.keys():
-            self.__test_path_lang_subdomain_with_slash_unsecure(key.upper(), key)
+            self.__test_path_lang_subdomain_with_slash_unsecure(
+                key.upper(), key)
 
     def test_path_lang_subdomain_lowercase_with_slash_unsecure(self):
         for key in self.__chinese_languages:
-            self.__test_path_lang_subdomain_with_slash_unsecure(key.lower(), key)
+            self.__test_path_lang_subdomain_with_slash_unsecure(
+                key.lower(), key)
 
     ###
 
@@ -233,11 +238,13 @@ class TestHeaders(unittest.TestCase):
 
     def test_path_lang_subdomain_uppercase_with_port_unsecure(self):
         for key in Lang.LANG.keys():
-            self.__test_path_lang_subdomain_with_port_unsecure(key.upper(), key)
+            self.__test_path_lang_subdomain_with_port_unsecure(
+                key.upper(), key)
 
     def test_path_lang_subdomain_lowercase_with_port_unsecure(self):
         for key in self.__chinese_languages:
-            self.__test_path_lang_subdomain_with_port_unsecure(key.lower(), key)
+            self.__test_path_lang_subdomain_with_port_unsecure(
+                key.lower(), key)
 
     ###
 
@@ -250,15 +257,18 @@ class TestHeaders(unittest.TestCase):
 
     def test_path_lang_subdomain_with_slash_with_port_unsecure(self):
         for key in Lang.LANG.keys():
-            self.__test_path_lang_subdomain_with_slash_with_port_unsecure(key, key)
+            self.__test_path_lang_subdomain_with_slash_with_port_unsecure(
+                key, key)
 
     def test_path_lang_subdomain_uppercase_with_slash_with_port_unsecure(self):
         for key in Lang.LANG.keys():
-            self.__test_path_lang_subdomain_with_slash_with_port_unsecure(key.upper(), key)
+            self.__test_path_lang_subdomain_with_slash_with_port_unsecure(
+                key.upper(), key)
 
     def test_path_lang_subdomain_lowercase_with_slash_with_port_unsecure(self):
         for key in self.__chinese_languages:
-            self.__test_path_lang_subdomain_with_slash_with_port_unsecure(key.lower(), key)
+            self.__test_path_lang_subdomain_with_slash_with_port_unsecure(
+                key.lower(), key)
 
     ###
 
@@ -266,12 +276,12 @@ class TestHeaders(unittest.TestCase):
         if len(url) == 0:
             url = 'https://wovn.io?wovn=%s'
         h = Headers(
-                self.__get_env({'url': url % query}),
-                self.__get_settings({
-                    'url_pattern': 'query',
-                    'url_pattern_reg': '((\?.*&)|\?)wovn=(?P<lang>[^&]+)(&|$)'
-                    })
-                )
+            self.__get_env({'url': url % query}),
+            self.__get_settings({
+                'url_pattern': 'query',
+                'url_pattern_reg': '((\?.*&)|\?)wovn=(?P<lang>[^&]+)(&|$)'
+            })
+        )
         self.assertEqual(path_lang, h.path_lang())
 
     def test_path_lang_query_empty(self):
@@ -430,11 +440,13 @@ class TestHeaders(unittest.TestCase):
 
     def test_path_lang_query_uppercase_with_slash_with_port_unsecure(self):
         for key in Lang.LANG.keys():
-            self.__test_path_lang_query_with_slash_with_port_unsecure(key.upper(), key)
+            self.__test_path_lang_query_with_slash_with_port_unsecure(
+                key.upper(), key)
 
     def test_path_lang_query_lowercase_with_slash_with_port_unsecure(self):
         for key in self.__chinese_languages:
-            self.__test_path_lang_query_with_slash_with_port_unsecure(key.lower(), key)
+            self.__test_path_lang_query_with_slash_with_port_unsecure(
+                key.lower(), key)
 
     ###
 
@@ -442,9 +454,9 @@ class TestHeaders(unittest.TestCase):
         if len(url) == 0:
             url = 'https://wovn.io/%s'
         h = Headers(
-                self.__get_env({'url': url % path}),
-                self.__get_settings()
-                )
+            self.__get_env({'url': url % path}),
+            self.__get_settings()
+        )
         self.assertEqual(path_lang, h.path_lang())
 
     def test_path_lang_path_empty(self):
@@ -515,7 +527,7 @@ class TestHeaders(unittest.TestCase):
     def test_path_lang_path_lowercase_unsecure(self):
         for key in self.__chinese_languages:
             self.__test_path_lang_path_unsecure(key.lower(), key)
-    
+
     ###
 
     def __test_path_lang_path_with_port_unsecure(self, path, path_lang):
@@ -540,7 +552,7 @@ class TestHeaders(unittest.TestCase):
     def test_path_lang_path_lowercase_with_port_unsecure(self):
         for key in self.__chinese_languages:
             self.__test_path_lang_path_with_port_unsecure(key.lower(), key)
-    
+
     ###
 
     def __get_env(self, options={}):
