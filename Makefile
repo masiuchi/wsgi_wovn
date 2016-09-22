@@ -1,5 +1,7 @@
+files = ls wsgi_wovn/*.py tests/*.py example/*.py
+
 pep8:
-	ls wsgi_wovn/*.py tests/*.py | xargs pep8
+	$(files) | xargs pep8
 
 autopep8:
-	ls wsgi_wovn/*.py tests/*.py | xargs autopep8 -i
+	$(files) | xargs autopep8 -i
