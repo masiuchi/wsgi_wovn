@@ -1,12 +1,13 @@
 import os
 from distutils.core import setup
+from setuptools import setup, find_packages
 
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(BASE_PATH, 'README.md')).read()
 
 setup(
         name='wsgi_wovn',
-        packages=['wsgi_wovn'],
+        packages=find_packages(),
         version='0.0.1',
         description='WSGI middleware for translating application by WOVN.io.',
         long_description=README,
