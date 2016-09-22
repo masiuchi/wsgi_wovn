@@ -174,9 +174,9 @@ class Middleware(object):
         l = Lang.get_code(l)
         text_index = values.get('text_vals') or {}
         src_index = values.get('img_vals') or {}
-        img_src_prefixx = values.get('img_src_prefix') or ''
+        img_src_prefix = values.get('img_src_prefix') or ''
         ignore_all = False
-        string_index = {}
+        # string_index = {}
         new_body = []
 
         for b in body:
@@ -206,7 +206,7 @@ class Middleware(object):
                 for f in d.xpath('//form'):
                     if self.check_wovn_ignore(a):
                         continue
-                    method = form.get('method')
+                    method = f.get('method')
                     if pattern == 'query' \
                             and (method is None or method.upper() == 'GET'):
                         tag = lxml.html.Element('input')
@@ -250,14 +250,14 @@ class Middleware(object):
                     )
                     if meta_data not in meta_data_types:
                         continue
-                    node_content = meta.get('content').strip()
+                    node_content = m.get('content').strip()
                     if node_content in text_index \
                             and l in text_index[node_content] \
                             and len(text_index[node_content][l]) > 0:
                         new_content = re.sub(
                             r'^(\s*)[\S\s]*(\s*)$',
                             '\1' +
-                            text_index_[node_content][l][0]['data'] + '\2'
+                            text_index[node_content][l][0]['data'] + '\2'
                         )
                         m.set('content', new_content)
 
@@ -277,7 +277,7 @@ class Middleware(object):
 
                         if src in src_index and l in src_index[src] \
                                 and len(src_index[src][l]) > 0:
-                            new_src = img_src_prefx + \
+                            new_src = img_src_prefix + \
                                 src_index[src][l][0]['data']
                             i.set('src', new_src)
 

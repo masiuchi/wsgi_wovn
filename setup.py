@@ -1,5 +1,4 @@
 import os
-from distutils.core import setup
 from setuptools import setup, find_packages
 
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))

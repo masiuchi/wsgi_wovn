@@ -307,7 +307,7 @@ class TestHeaders(unittest.TestCase):
 
     def __test_path_lang_query_with_slash(self, query, path_lang):
         url = 'https://wovn.io/?wovn=%s'
-        self.__test_path_lang_query(query, path_lang)
+        self.__test_path_lang_query(query, path_lang, url)
 
     def test_path_lang_query_empty_with_slash(self):
         self.__test_path_lang_query_with_slash('', '')
@@ -328,7 +328,7 @@ class TestHeaders(unittest.TestCase):
 
     def __test_path_lang_query_with_port(self, query, path_lang):
         url = 'https://wovn.io:1234?wovn=%s'
-        self.__test_path_lang_query(query, path_lang)
+        self.__test_path_lang_query(query, path_lang, url)
 
     def test_path_lang_query_empty_with_port(self):
         self.__test_path_lang_query_with_port('', '')
@@ -349,7 +349,7 @@ class TestHeaders(unittest.TestCase):
 
     def __test_path_lang_query_with_slash_with_port(self, query, path_lang):
         url = 'https://wovn.io:1234/?wovn=%s'
-        self.__test_path_lang_query(query, path_lang)
+        self.__test_path_lang_query(query, path_lang, url)
 
     def test_path_lang_query_empty_with_slash_with_port(self):
         self.__test_path_lang_query_with_slash_with_port('', '')
@@ -370,7 +370,7 @@ class TestHeaders(unittest.TestCase):
 
     def __test_path_lang_query_unsecure(self, query, path_lang):
         url = 'http://wovn.io?wovn=%s'
-        self.__test_path_lang_query(query, path_lang)
+        self.__test_path_lang_query(query, path_lang, url)
 
     def test_path_lang_query_empty_unsecure(self):
         self.__test_path_lang_query_unsecure('', '')
@@ -391,7 +391,7 @@ class TestHeaders(unittest.TestCase):
 
     def __test_path_lang_query_with_slash_unsecure(self, query, path_lang):
         url = 'http://wovn.io/?wovn=%s'
-        self.__test_path_lang_query(query, path_lang)
+        self.__test_path_lang_query(query, path_lang, url)
 
     def test_path_lang_query_empty_with_slash_unsecure(self):
         self.__test_path_lang_query_with_slash_unsecure('', '')
@@ -412,7 +412,7 @@ class TestHeaders(unittest.TestCase):
 
     def __test_path_lang_query_with_port_unsecure(self, query, path_lang):
         url = 'http://wovn.io:1234?wovn=%s'
-        self.__test_path_lang_query(query, path_lang)
+        self.__test_path_lang_query(query, path_lang, url)
 
     def test_path_lang_query_empty_with_port_unsecure(self):
         self.__test_path_lang_query_with_port_unsecure('', '')
@@ -434,7 +434,7 @@ class TestHeaders(unittest.TestCase):
     def __test_path_lang_query_with_slash_with_port_unsecure(
             self, query, path_lang):
         url = 'http://wovn.io:1234/?wovn=%s'
-        self.__test_path_lang_query(query, path_lang)
+        self.__test_path_lang_query(query, path_lang, url)
 
     def test_path_lang_query_empty_with_slash_with_port_unsecure(self):
         self.__test_path_lang_query_with_slash_with_port_unsecure('', '')
@@ -493,7 +493,7 @@ class TestHeaders(unittest.TestCase):
         url = 'https://wovn.io:1234%s'
         self.__test_path_lang_path('', '', url)
 
-    def test_path_lang_path_empty_with_slash(self):
+    def test_path_lang_path_empty_with_slash_with_port(self):
         self.__test_path_lang_path_with_port('', '')
 
     def test_path_lang_path_with_port(self):
