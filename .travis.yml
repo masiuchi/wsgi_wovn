@@ -3,6 +3,10 @@ python:
   - '3.3'
   - '3.4'
   - '3.5'
-before_script: pip install coveralls
-script: coverage run --source=wsgi_wovn setup.py test
-after_success: coveralls
+before_script:
+  - pip install coveralls flake8 hacking
+script:
+  - coverage run --source=wsgi_wovn setup.py test
+  - make flake
+after_success:
+  - coveralls
