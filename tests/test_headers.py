@@ -2,8 +2,8 @@ import unittest
 
 from urllib.parse import urlparse
 
-from wsgi_wovn.headers import Headers
-from wsgi_wovn.lang import Lang
+from wsgi_wovn import Headers
+from wsgi_wovn import Lang
 
 
 class TestHeaders(unittest.TestCase):

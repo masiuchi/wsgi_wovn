@@ -1,6 +1,6 @@
 import unittest
 
-from wsgi_wovn.store import Store
+from wsgi_wovn import Store
 
 
 class TestStore(unittest.TestCase):

@@ -1,4 +1,4 @@
-files = ls *.py wsgi_wovn/*.py tests/*.py example/*.py
+files = find ./ -type f -name "*.py"
 
 test:
 	python setup.py test
