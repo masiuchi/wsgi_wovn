@@ -11,3 +11,6 @@ autopep8:
 
 flake8:
 	$(files) | xargs flake8
+
+pylint:
+	$(files) | xargs pylint
