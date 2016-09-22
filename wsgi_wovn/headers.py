@@ -3,7 +3,7 @@ import re
 from wsgi_wovn.lang import Lang
 
 
-class Headers:
+class Headers(object):
 
     def __init__(self, environ, settings):
         self.__environ = environ

@@ -10,4 +10,4 @@ autopep8:
 	$(files) | xargs autopep8 -i
 
 flake8:
-	flake8
+	$(files) | xargs flake8

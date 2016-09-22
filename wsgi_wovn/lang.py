@@ -1,4 +1,4 @@
-class Lang:
+class Lang(object):
     LANG = {
         'ar': {
             'name': 'ﺎﻠﻋﺮﺒﻳﺓ',

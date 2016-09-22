@@ -1,11 +1,11 @@
 import json
-import urllib.request
 import re
+import urllib.request
 
 from wsgi_wovn.lang import Lang
 
 
-class Store:
+class Store(object):
 
     def __init__(self):
         self.__settings = {
