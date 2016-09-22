@@ -3,6 +3,9 @@ files = find ./ -type f -name "*.py"
 test:
 	python setup.py test
 
+install-dev:
+	pip install nose autopep8 flake8 hacking pylint
+
 pep8:
 	$(files) | xargs pep8
 
