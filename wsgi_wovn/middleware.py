@@ -187,7 +187,8 @@ class Middleware(object):
                 html = lxml.html.tostring(d)
 
                 def repl(matchobj):
-                    return b'href="%s"' % urllib.parse.unquote(matchobj.group(1))
+                    return b'href="%s"' \
+                        % urllib.parse.unquote(matchobj.group(1))
                 html = re.sub(b'href="([^"]*)"', repl, html)
                 new_body.append(html)
                 continue
@@ -206,7 +207,8 @@ class Middleware(object):
                     if self.check_wovn_ignore(a):
                         continue
                     method = form.get('method')
-                    if pattern == 'query' and (method is None or method.upper() == 'GET'):
+                    if pattern == 'query' \
+                            and (method is None or method.upper() == 'GET'):
                         tag = lxml.html.Element('input')
                         tag.set('type', 'hidden')
                         tag.set('name', 'wovn')
@@ -238,13 +240,19 @@ class Middleware(object):
                     if self.check_wovn_ignore(m):
                         continue
                     meta_data = m.get('name') or m.get('property') or ''
-                    if not re.search(
-                            r'^(description|title|og:title|og:description|twitter:title|twitter:description)$',
-                            meta_data
-                    ):
+                    meta_data_types = (
+                        'description',
+                        'title',
+                        'og:title',
+                        'og:description',
+                        'twitter:title',
+                        'twitter:description',
+                    )
+                    if meta_data not in meta_data_types:
                         continue
                     node_content = meta.get('content').strip()
-                    if node_content in text_index and l in text_index[node_content] \
+                    if node_content in text_index \
+                            and l in text_index[node_content] \
                             and len(text_index[node_content][l]) > 0:
                         new_content = re.sub(
                             r'^(\s*)[\S\s]*(\s*)$',

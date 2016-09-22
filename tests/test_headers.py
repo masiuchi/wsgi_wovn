@@ -158,7 +158,8 @@ class TestHeaders(unittest.TestCase):
 
     ###
 
-    def __test_path_lang_subdomain_with_slash_with_port(self, subdomain, path_lang):
+    def __test_path_lang_subdomain_with_slash_with_port(
+            self, subdomain, path_lang):
         url = 'https://%s.wovn.io:1234/'
         self.__test_path_lang_subdomain(subdomain, path_lang, url)
 
@@ -202,7 +203,8 @@ class TestHeaders(unittest.TestCase):
 
     ###
 
-    def __test_path_lang_subdomain_with_slash_unsecure(self, subdomain, path_lang):
+    def __test_path_lang_subdomain_with_slash_unsecure(
+            self, subdomain, path_lang):
         url = 'http://%s.wovn.io/'
         self.__test_path_lang_subdomain(subdomain, path_lang, url)
 
@@ -225,7 +227,8 @@ class TestHeaders(unittest.TestCase):
 
     ###
 
-    def __test_path_lang_subdomain_with_port_unsecure(self, subdomain, path_lang):
+    def __test_path_lang_subdomain_with_port_unsecure(
+            self, subdomain, path_lang):
         url = 'http://%s.wovn.io:1234'
         self.__test_path_lang_subdomain(subdomain, path_lang, url)
 
@@ -248,7 +251,8 @@ class TestHeaders(unittest.TestCase):
 
     ###
 
-    def __test_path_lang_subdomain_with_slash_with_port_unsecure(self, subdomain, path_lang):
+    def __test_path_lang_subdomain_with_slash_with_port_unsecure(
+            self, subdomain, path_lang):
         url = 'http://%s.wovn.io:1234/'
         self.__test_path_lang_subdomain(subdomain, path_lang, url)
 
@@ -427,7 +431,8 @@ class TestHeaders(unittest.TestCase):
 
     ###
 
-    def __test_path_lang_query_with_slash_with_port_unsecure(self, query, path_lang):
+    def __test_path_lang_query_with_slash_with_port_unsecure(
+            self, query, path_lang):
         url = 'http://wovn.io:1234/?wovn=%s'
         self.__test_path_lang_query(query, path_lang)
 

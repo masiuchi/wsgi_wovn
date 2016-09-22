@@ -83,8 +83,8 @@ class Store:
             if self.__settings.get('url_pattern') == 'path':
                 self.__settings['url_pattern_reg'] = r'/(?P<lang>[^/.?]+)'
             elif self.__settings.get('url_pattern') == 'query':
-                self.__settings[
-                    'url_pattern_reg'] = r'((\?.*&)|\?)wovn=(?P<lang>[^&]+)(&|$)'
+                self.__settings['url_pattern_reg'] \
+                    = r'((\?.*&)|\?)wovn=(?P<lang>[^&]+)(&|$)'
             elif self.__settings.get('url_pattern') == 'subdomain':
                 self.__settings['url_pattern_reg'] = r'^(?P<lang>[^.]+)\.'
 

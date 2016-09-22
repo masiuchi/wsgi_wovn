@@ -26,8 +26,8 @@ class Headers:
             self.__environ['REQUEST_URI'] \
                 = re.sub('^.*://[^/]+', '', self.__environ['REQUEST_URI'])
         self.unmasked_pathname = self.__environ['REQUEST_URI'].split('?')[0]
-        if not (re.search(r'/$', self.unmasked_pathname)
-                or re.search(r'/[^/.]+\.[^/.]+$', self.unmasked_pathname)):
+        if not (re.search(r'/$', self.unmasked_pathname) or
+                re.search(r'/[^/.]+\.[^/.]+$', self.unmasked_pathname)):
             self.unmasked_pathname += '/'
         self.unmasked_url = '%s://%s%s' \
             % (self.protocol, self.unmasked_host, self.unmasked_pathname)
@@ -76,7 +76,9 @@ class Headers:
             url = (self.__environ.get('SERVER_NAME') or '') \
                 + (self.__environ.get('REQUEST_URI') or '')
             match = pattern.search(url)
-            if match and match.group('lang') and Lang.get_lang(match.group('lang')):
+            if match \
+                    and match.group('lang') \
+                    and Lang.get_lang(match.group('lang')):
                 self.__path_lang = Lang.get_code(match.group('lang'))
             else:
                 self.__path_lang = ''
@@ -87,7 +89,9 @@ class Headers:
             cookie = self.__environ['HTTP_COOKIE'] or ''
             match = re.search(
                 'wovn_selected_lang\s*=\s*(?P<lang>[^;\s]+)', cookie)
-            if match and match.group('lang') and Lang.get_lang(match.group('lang')):
+            if match \
+                    and match.group('lang') \
+                    and Lang.get_lang(match.group('lang')):
                 self.__browser_lang = match.group('lang')
             else:
                 self.__brwoser_lang = ''
@@ -115,7 +119,8 @@ class Headers:
             if self.__settings['url_pattern'] == 'query':
                 if not re.search('\?', location):
                     location = '%s?wovn=%s' % (location, lang)
-                elif not re.search('(\?|&)wovn=', self.__envirion['REQUEST_URI']):
+                elif not re.search(
+                        '(\?|&)wovn=', self.__envirion['REQUEST_URI']):
                     location = '%s&wovn=%s' % (location, lang)
             elif self._settings['url_pattern'] == 'subdomain':
                 location = '%s.%s' % (lang.lower(), location)
