@@ -11,6 +11,6 @@ before_script:
   - pip install coveralls flake8 hacking
 script:
   - coverage run --source=wsgi_wovn setup.py test
-  - make flake8
+  - if [[ $TRAVIS_PYTHON_VERSION != "3.3" ]]; then make flake8; fi
 after_success:
   - coveralls
