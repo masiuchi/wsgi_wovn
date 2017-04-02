@@ -1,6 +1,6 @@
 # wsgi_wovn
-WSGI middleware for translating application by WOVN.io.
 
+WSGI middleware for translating application by WOVN.io.
 
 ## Usage
 
@@ -12,6 +12,7 @@ from wsgi_wovn import Middleware
 def application(env, start_response):
     start_response('200 OK', [('Content-Type', 'text/html')])
     return [b"<html><body><a href='/test'>Hello WSGI world!</a></body></html>"]
+
 
 wovn_app = Middleware(application, {
     'user_token': 'IRb6-',
