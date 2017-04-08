@@ -5,10 +5,10 @@ README = open('README').read()
 
 setup(name='wsgi_wovn',
       packages=find_packages(),
-      version='0.0.1',
+      version='0.0.2',
       description='WSGI middleware for translating application by WOVN.io.',
       long_description=README,
-      author='Masahiro Iuchi',
+      author='Masahiro IUCHI',
       author_email='masahiro.iuchi@gmail.com',
       url='https://github.com/masiuchi/wsgi-wovn',
       license='MIT License',
