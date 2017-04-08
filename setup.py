@@ -5,7 +5,7 @@ README = open('README').read()
 
 setup(name='wsgi_wovn',
       packages=find_packages(),
-      version='0.0.2',
+      version='0.0.3',
       description='WSGI middleware for translating application by WOVN.io. A port of wovnjava.',
       long_description=README,
       author='Masahiro IUCHI',
