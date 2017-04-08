@@ -38,122 +38,122 @@ class Lang(object):
             'code': 'zh-CHT',
             'en': 'Trad Chinese'
         },
-        'da':     {
+        'da': {
             'name': 'Dansk',
             'code': 'da',
             'en': 'Danish'
         },
-        'nl':     {
+        'nl': {
             'name': 'Nederlands',
             'code': 'nl',
             'en': 'Dutch'
         },
-        'en':     {
+        'en': {
             'name': 'English',
             'code': 'en',
             'en': 'English'
         },
-        'fi':     {
+        'fi': {
             'name': 'Suomi',
             'code': 'fi',
             'en': 'Finnish'
         },
-        'fr':     {
+        'fr': {
             'name': 'Français',
             'code': 'fr',
             'en': 'French'
         },
-        'de':     {
+        'de': {
             'name': 'Deutsch',
             'code': 'de',
             'en': 'German'
         },
-        'el':     {
+        'el': {
             'name': 'Ελληνικά',
             'code': 'el',
             'en': 'Greek'
         },
-        'he':     {
+        'he': {
             'name': 'עברית',
             'code': 'he',
             'en': 'Hebrew'
         },
-        'id':     {
+        'id': {
             'name': 'Bahasa Indonesia',
             'code': 'id',
             'en': 'Indonesian'
         },
-        'it':     {
+        'it': {
             'name': 'Italiano',
             'code': 'it',
             'en': 'Italian'
         },
-        'ja':     {
+        'ja': {
             'name': '日本語',
             'code': 'ja',
             'en': 'Japanese'
         },
-        'ko':     {
+        'ko': {
             'name': '한국어',
             'code': 'ko',
             'en': 'Korean'
         },
-        'ms':     {
+        'ms': {
             'name': 'Bahasa Melayu',
             'code': 'ms',
             'en': 'Malay'
         },
-        'no':     {
+        'no': {
             'name': 'Norsk',
             'code': 'no',
             'en': 'Norwegian'
         },
-        'pl':     {
+        'pl': {
             'name': 'Polski',
             'code': 'pl',
             'en': 'Polish'
         },
-        'pt':     {
+        'pt': {
             'name': 'Português',
             'code': 'pt',
             'en': 'Portuguese'
         },
-        'ru':     {
+        'ru': {
             'name': 'Русский',
             'code': 'ru',
             'en': 'Russian'
         },
-        'es':     {
+        'es': {
             'name': 'Español',
             'code': 'es',
             'en': 'Spanish'
         },
-        'sv':     {
+        'sv': {
             'name': 'Svensk',
             'code': 'sv',
             'en': 'Swedish'
         },
-        'th':     {
+        'th': {
             'name': 'ภาษาไทย',
             'code': 'th',
             'en': 'Thai'
         },
-        'hi':     {
+        'hi': {
             'name': 'हिन्दी',
             'code': 'hi',
             'en': 'Hindi'
         },
-        'tr':     {
+        'tr': {
             'name': 'Türkçe',
             'code': 'tr',
             'en': 'Turkish'
         },
-        'uk':     {
+        'uk': {
             'name': 'Українська',
             'code': 'uk',
             'en': 'Ukrainian'
         },
-        'vi':     {
+        'vi': {
             'name': 'Tiếng Việt',
             'code': 'vi',
             'en': 'Vietnamese'

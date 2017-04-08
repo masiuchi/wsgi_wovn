@@ -31,16 +31,16 @@ class Store(object):
 
     def __init__(self):
         self.__settings = {
-            'user_token':      '',
-            'secret_key':      '',
-            'url_pattern':     'path',
+            'user_token': '',
+            'secret_key': '',
+            'url_pattern': 'path',
             'url_pattern_reg': '/(?P<lang>[^/.?]+)',
-            'query':           [],
-            'api_url':         'https://api.wovn.io/v0/values',
-            'default_lang':    'en',
+            'query': [],
+            'api_url': 'https://api.wovn.io/v0/values',
+            'default_lang': 'en',
             'supported_langs': ['en'],
-            'test_mode':       False,
-            'test_url':        '',
+            'test_mode': False,
+            'test_url': '',
         }
         self.__config_loaded = False
 
