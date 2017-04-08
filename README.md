@@ -1,6 +1,13 @@
 # wsgi_wovn
 
 WSGI middleware for translating application by WOVN.io.
+A port of [wovnjava](https://github.com/wovnio/wovnjava).
+
+## Install
+
+```bash
+$ pip install wsgi_wovn
+```
 
 ## Usage
 
