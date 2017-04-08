@@ -1,9 +1,7 @@
-import os
 from setuptools import find_packages
 from setuptools import setup
 
-BASE_PATH = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(BASE_PATH, 'README.md')).read()
+README = open('README').read()
 
 setup(name='wsgi_wovn',
       packages=find_packages(),
